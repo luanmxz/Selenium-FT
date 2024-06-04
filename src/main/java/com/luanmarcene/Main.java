@@ -3,8 +3,10 @@ package com.luanmarcene;
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +36,12 @@ public class Main {
         logger.info("Iniciando automação com Selenium para a AGENDA {}", agenda);
 
         WebDriver webdriver = WebDriverConfig.startaDriver();
-        WebDriverWait wait = WebDriverConfig.configuraWait(webdriver, Duration.ofSeconds(30), Duration.ofMillis(500));
+        WebDriverWait wait = WebDriverConfig.configuraWait(webdriver, Duration.ofSeconds(60), Duration.ofMillis(500));
 
         HttpResponse<String> dadosProcessamento = Requisicoes.getDadosProcessamento(agenda);
 
         User user = RequisicoesUtils.retornaUser(dadosProcessamento);
+        RequisicoesUtils.retornaSolicitacoes(dadosProcessamento);
 
         Login.realizaLogin(webdriver, wait, user);
 
@@ -47,8 +50,12 @@ public class Main {
 
         Authenticator2FA.insereTOTPCode(TOTPCode, wait);
 
-        BspPortal.goToIataService(webdriver, wait);
+        WebElement tableIatas = BspPortal.goToIataService(webdriver, wait);
 
-        logger.info("Título da página acessada: " + webdriver.getTitle());
+        BspPortal.iteraIatas(tableIatas, webdriver, wait, dadosProcessamento);
+
+        webdriver.quit();
+
+        logger.info("Processo de extração de bilhetes finalizado para a agenda {}", agenda);
     }
 }
