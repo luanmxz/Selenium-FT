@@ -1,4 +1,4 @@
-package com.luanmarcene.utils;
+package com.furktech.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

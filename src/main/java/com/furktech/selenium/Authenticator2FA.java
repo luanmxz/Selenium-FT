@@ -1,4 +1,4 @@
-package com.luanmarcene.selenium;
+package com.furktech.selenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

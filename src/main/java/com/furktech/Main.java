@@ -1,23 +1,22 @@
-package com.luanmarcene;
+package com.furktech;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.luanmarcene.http.Requisicoes;
-import com.luanmarcene.model.User;
-import com.luanmarcene.selenium.Authenticator2FA;
-import com.luanmarcene.selenium.BspPortal;
-import com.luanmarcene.selenium.Login;
-import com.luanmarcene.selenium.WebDriverConfig;
-import com.luanmarcene.utils.DecodeTOTP;
-import com.luanmarcene.utils.RequisicoesUtils;
+import com.furktech.http.Requisicoes;
+import com.furktech.model.User;
+import com.furktech.selenium.Authenticator2FA;
+import com.furktech.selenium.BspPortal;
+import com.furktech.selenium.Login;
+import com.furktech.selenium.WebDriverConfig;
+import com.furktech.utils.DecodeTOTP;
+import com.furktech.utils.RequisicoesUtils;
 
 public class Main {
 
@@ -49,9 +48,9 @@ public class Main {
 
         Authenticator2FA.insereTOTPCode(TOTPCode, wait);
 
-        WebElement tableIatas = BspPortal.goToIataService(webdriver, wait);
+        BspPortal.goToIataService(webdriver, wait);
 
-        BspPortal.iteraIatas(tableIatas, webdriver, wait, dadosProcessamento);
+        BspPortal.iteraIatas(webdriver, wait, dadosProcessamento);
 
         webdriver.quit();
 

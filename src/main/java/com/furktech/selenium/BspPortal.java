@@ -1,4 +1,4 @@
-package com.luanmarcene.selenium;
+package com.furktech.selenium;
 
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
@@ -17,32 +17,18 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.luanmarcene.utils.RequisicoesUtils;
+import com.furktech.utils.RequisicoesUtils;
 
 public class BspPortal {
 
     static final Logger logger = LoggerFactory.getLogger(BspPortal.class);
 
-    public static WebElement goToIataService(WebDriver webdriver, WebDriverWait wait) {
+    public static void goToIataService(WebDriver webdriver, WebDriverWait wait) {
 
         wait.until(ExpectedConditions
                 .elementToBeClickable(By.cssSelector(".services-buttons > div:nth-child(1) > div:nth-child(1)")));
 
         webdriver.navigate().to("https://portal.iata.org/s/services?tab=myServices");
-
-        WebElement tableIatas = navigateToTableIata(webdriver, wait);
-
-        return tableIatas;
-    }
-
-    public static WebElement navigateToTableIata(WebDriver webdriver, WebDriverWait wait) {
-
-        webdriver.navigate().to("https://portal.iata.org/idp/login?app=0spw0000000blJn");
-
-        WebElement tableIatas = wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("/html/body/center/table/tbody/tr/td[2]/form/table/tbody/tr[2]/td/div[1]/table")));
-
-        return tableIatas;
     }
 
     public static void extraiConteudoBilhete(WebDriverWait wait, WebElement tr, Entry<String, List<JsonNode>> entry) {
@@ -54,7 +40,7 @@ public class BspPortal {
         // AO SCRIPT DO CLÓVIS
     }
 
-    public static void iteraIatas(WebElement tableIatas, WebDriver webdriver, WebDriverWait wait,
+    public static void iteraIatas(WebDriver webdriver, WebDriverWait wait,
             HttpResponse<String> dadosProcessamento) throws JsonMappingException, JsonProcessingException {
 
         // Recupera as solicitações separadas por unidade operacional
@@ -62,9 +48,13 @@ public class BspPortal {
 
         for (Map.Entry<String, List<JsonNode>> entry : solicitacoes.entrySet()) {
 
+            webdriver.navigate().to("https://portal.iata.org/idp/login?app=0spw0000000blJn");
+
+            WebElement tableIatas = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("/html/body/center/table/tbody/tr/td[2]/form/table/tbody/tr[2]/td/div[1]/table")));
+
             String unidadeOperacional = entry.getKey().substring(0, entry.getKey().length() - 1);
 
-            tableIatas = navigateToTableIata(webdriver, wait);
             List<WebElement> trs = tableIatas.findElements(By.tagName("tr"));
             List<WebElement> trsToClick = new ArrayList<WebElement>();
 

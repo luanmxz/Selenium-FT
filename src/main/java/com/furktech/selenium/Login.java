@@ -1,4 +1,4 @@
-package com.luanmarcene.selenium;
+package com.furktech.selenium;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.luanmarcene.model.User;
+import com.furktech.model.User;
 
 public class Login {
 

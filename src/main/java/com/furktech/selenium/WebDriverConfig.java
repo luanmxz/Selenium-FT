@@ -1,4 +1,4 @@
-package com.luanmarcene.selenium;
+package com.furktech.selenium;
 
 import java.time.Duration;
 

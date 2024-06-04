@@ -1,4 +1,4 @@
-package com.luanmarcene.model;
+package com.furktech.model;
 
 public class User {
 
