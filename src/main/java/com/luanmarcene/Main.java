@@ -1,34 +1,54 @@
 package com.luanmarcene;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.net.http.HttpResponse;
 import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.luanmarcene.http.Requisicoes;
+import com.luanmarcene.model.User;
+import com.luanmarcene.selenium.Authenticator2FA;
+import com.luanmarcene.selenium.BspPortal;
+import com.luanmarcene.selenium.Login;
+import com.luanmarcene.selenium.WebDriverConfig;
+import com.luanmarcene.utils.DecodeTOTP;
+import com.luanmarcene.utils.RequisicoesUtils;
 
 public class Main {
 
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println("Iniciando automação com Selenium!");
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
-        // Criando uma nova instância do webdriver
-        System.setProperty("webdriver.gecko.driver", "C:\\RPA\\Webdrivers\\geckodriver-v0.34.0-win64\\geckodriver.exe");
-        WebDriver driver = new FirefoxDriver();
+    public static void main(String[] args) throws IOException, InterruptedException {
 
-        /*
-         * Criando um Wait para aguardar o elemento na tela por 30 segundos, verifica a
-         * condição do elemento a cada 500 milisegundos.
-         */
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30), Duration.ofMillis(500));
+        if (args.length != 1) {
+            System.err.println("Erro: java Main Argumento <AGENDA> não recebido.");
+            System.exit(1);
+        }
 
-        Login.realizaLogin(driver, wait);
-        Authenticator2FA.buscaInsere2FaCode(wait);
+        String agenda = args[0];
 
-        // Printa o nome da janela aberta no momento.
-        System.out.println("Título da página acessada: " + driver.getTitle());
+        logger.info("Iniciando automação com Selenium para a AGENDA {}", agenda);
 
-        // driver.quit();
+        WebDriver webdriver = WebDriverConfig.startaDriver();
+        WebDriverWait wait = WebDriverConfig.configuraWait(webdriver, Duration.ofSeconds(30), Duration.ofMillis(500));
 
+        HttpResponse<String> dadosProcessamento = Requisicoes.getDadosProcessamento(agenda);
+
+        User user = RequisicoesUtils.retornaUser(dadosProcessamento);
+
+        Login.realizaLogin(webdriver, wait, user);
+
+        String TOTPCode = DecodeTOTP.decodeTOTP(
+                "otpauth-migration://offline?data=CiEKFIIlhwIICQW0fKZaGfu9shlhx89ZEgNCU1AgASgBMAIQARgBIAAopf7KmP7%2F%2F%2F%2F%2FAQ%3D%3D");
+
+        Authenticator2FA.insereTOTPCode(TOTPCode, wait);
+
+        BspPortal.goToIataService(webdriver, wait);
+
+        logger.info("Título da página acessada: " + webdriver.getTitle());
     }
 }
