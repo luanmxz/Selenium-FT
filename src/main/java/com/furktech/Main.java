@@ -5,6 +5,9 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.furktech.processos.BaixaArquivos;
+import com.furktech.processos.ExtracaoBilhetes;
+import com.furktech.processos.SolicitaReembolso;
 import com.furktech.utils.TiposProcessoEnum;
 
 import io.github.cdimascio.dotenv.Dotenv;
