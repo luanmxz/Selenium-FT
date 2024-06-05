@@ -1,4 +1,4 @@
-package com.furktech.selenium;
+package com.furktech.utils;
 
 import java.time.Duration;
 
@@ -8,13 +8,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class WebDriverConfig {
 
+    static final Logger logger = LoggerFactory.getLogger(WebDriverConfig.class);
+    static final Dotenv dotenv = Dotenv.load();
+
     public static WebDriver startaDriver() {
-        Logger logger = LoggerFactory.getLogger(WebDriverConfig.class);
 
         // Criando uma nova instância do webdriver
-        System.setProperty("webdriver.gecko.driver", "C:\\RPA\\webdriver\\geckodriver-v0.34.0-win64\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", dotenv.get("FIREFOX_WEBDRIVER_PATH"));
         WebDriver webdriver = new FirefoxDriver();
 
         logger.info("Criando nova instância do WebDriver {}", webdriver.getClass().getName());

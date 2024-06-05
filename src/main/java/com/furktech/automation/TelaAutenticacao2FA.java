@@ -1,4 +1,4 @@
-package com.furktech.selenium;
+package com.furktech.automation;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,11 +7,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Authenticator2FA {
+public class TelaAutenticacao2FA {
+
+    static final Logger logger = LoggerFactory.getLogger(TelaAutenticacao2FA.class);
 
     public static void insereTOTPCode(String totpcode, WebDriverWait wait) {
-
-        Logger logger = LoggerFactory.getLogger(Authenticator2FA.class);
 
         logger.info("TOTP Code recebido: {}", totpcode);
 

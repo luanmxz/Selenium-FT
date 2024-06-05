@@ -17,7 +17,7 @@
             "mainClass": "com.furktech.Main",
             "projectName": "selenium",
             "args": [
-                "2276376"
+                "2276376", "EXTRACAO_BILHETES"
             ]
         }
     ]

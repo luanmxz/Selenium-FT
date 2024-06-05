@@ -1,4 +1,4 @@
-package com.furktech.selenium;
+package com.furktech.automation;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import com.furktech.model.User;
 
-public class Login {
+public class TelaLogin {
+
+        static final Logger logger = LoggerFactory.getLogger(TelaLogin.class);
 
         public static void realizaLogin(WebDriver driver, WebDriverWait wait, User user) {
-
-                Logger logger = LoggerFactory.getLogger(Login.class);
 
                 driver.get("https://portal.iata.org/s/login/?language=pt_BR");
                 driver.manage().window().maximize();

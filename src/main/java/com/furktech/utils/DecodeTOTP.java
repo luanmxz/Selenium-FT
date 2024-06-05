@@ -19,6 +19,8 @@ import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
 public class DecodeTOTP {
 
+    static final Logger logger = LoggerFactory.getLogger(DecodeTOTP.class);
+
     // Decodifica o QR CODE URL e retorna a secret key
     public static String decodeTOTP(String googleMigrationUrl) throws UnsupportedEncodingException {
         String migrationUrl = googleMigrationUrl;
@@ -28,11 +30,21 @@ public class DecodeTOTP {
         try {
             Authenticator.MigrationPayload payload = Authenticator.MigrationPayload.parseFrom(decodedData);
             String secretKey = extractSecretKey(payload);
+
             String TOTPCode = getTOTPCode(secretKey);
+
+            while (TOTPCode.length() != 6) {
+                logger.info("TOTPCode gerado inválido {}, gerando novo código.", TOTPCode);
+
+                TOTPCode = getTOTPCode(secretKey);
+
+                logger.info("Novo TOTPCode Gerado", TOTPCode);
+            }
+
             return TOTPCode;
         } catch (InvalidProtocolBufferException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to decode TOTP URL", e);
+            throw new RuntimeException("Falha no decode do TOTP Url", e);
         }
     }
 
@@ -51,8 +63,6 @@ public class DecodeTOTP {
 
     // Extrai a secret key do TOTP payload
     private static String extractSecretKey(Authenticator.MigrationPayload payload) {
-
-        Logger logger = LoggerFactory.getLogger(DecodeTOTP.class);
 
         for (Authenticator.MigrationPayload.OtpParameters otpParameters : payload.getOtpParametersList()) {
             logger.info("---------- PAYLOAD INFO -----------");
@@ -73,8 +83,6 @@ public class DecodeTOTP {
 
     // Gera um código TOTP a partir da secret key
     public static String getTOTPCode(String secretKey) {
-
-        Logger logger = LoggerFactory.getLogger(DecodeTOTP.class);
 
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
         GoogleAuthenticatorKey key = new GoogleAuthenticatorKey.Builder(secretKey).build();

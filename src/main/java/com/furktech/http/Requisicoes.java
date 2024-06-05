@@ -10,12 +10,15 @@ import java.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class Requisicoes {
 
         static final Logger logger = LoggerFactory.getLogger(Requisicoes.class);
+        static final Dotenv dotenv = Dotenv.load();
 
-        static final String username = "api.automation.edge@voeares.com.br";
-        static final String password = "82e6ff";
+        static final String username = dotenv.get("API_USERNAME");
+        static final String password = dotenv.get("API_PASSWORD");
         static final String authString = username + ":" + password;
 
         public static HttpResponse<String> getDadosProcessamento(String agenda)
@@ -26,7 +29,7 @@ public class Requisicoes {
                 // Busca os dados de processamento para a agenda recebida como argumento.
                 HttpClient client = HttpClient.newHttpClient();
                 HttpRequest request = HttpRequest.newBuilder()
-                                .uri(URI.create("https://cvccorp.voeares.com.br/api/automation-edge/dados-processamento/"
+                                .uri(URI.create(dotenv.get("API_DADOS_PROCESSAMENTO_URL")
                                                 + agenda))
                                 .header("Authorization", authHeader)
                                 .build();
