@@ -4,11 +4,14 @@ import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.github.cdimascio.dotenv.Dotenv;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebDriverConfig {
 
@@ -17,11 +20,26 @@ public class WebDriverConfig {
 
     public static WebDriver startaDriver() {
 
-        // Criando uma nova instância do webdriver
-        System.setProperty("webdriver.gecko.driver", dotenv.get("FIREFOX_WEBDRIVER_PATH"));
-        WebDriver webdriver = new FirefoxDriver();
+        WebDriverManager.firefoxdriver().setup();
 
-        logger.info("Criando nova instância do WebDriver {}", webdriver.getClass().getName());
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("-headless");
+
+        WebDriver webdriver = new FirefoxDriver(options);
+
+        // Criando uma nova instância do webdriver
+        /*
+         * System.setProperty("webdriver.gecko.driver",
+         * dotenv.get("FIREFOX_WEBDRIVER_PATH"));
+         * 
+         * FirefoxOptions options = new FirefoxOptions();
+         * options.addArguments("-headless");
+         * 
+         * WebDriver webdriver = new FirefoxDriver(options);
+         * 
+         * logger.info("Criando nova instância do WebDriver {}",
+         * webdriver.getClass().getName());
+         */
 
         return webdriver;
     }

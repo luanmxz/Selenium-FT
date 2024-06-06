@@ -12,6 +12,11 @@ import com.furktech.utils.TiposProcessoEnum;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
+/**
+ * @author luan.costa@wises.com.br
+ * @version 1.0
+ */
+
 public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
