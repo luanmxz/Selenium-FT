@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\automation\TelaIATAS.java
 C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\utils\DecodeTOTP.java
 C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\Main.java
@@ -16,3 +17,15 @@ C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\automatio
 C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\automation\TelaBspPortal.java
 C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\model\Solicitacao.java
 C:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\Authenticator.java
+=======
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\selenium\Login.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\utils\DecodeTOTP.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\Main.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\model\User.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\selenium\BspPortal.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\selenium\Authenticator2FA.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\utils\RequisicoesUtils.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\selenium\WebDriverConfig.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\furktech\http\Requisicoes.java
+c:\Users\luanm\OneDrive\Desktop\Selenium-FT\src\main\java\com\Authenticator.java
+>>>>>>> 506aee1f2873b5cb8f7359756e10daa54db59d48
