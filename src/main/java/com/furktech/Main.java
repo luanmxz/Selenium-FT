@@ -24,23 +24,18 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        if (args.length != 2) {
-            logger.error("Erro: Deve passar 2 argumentos: AGENDA e TIPO_PROCESSAMENTO");
-            System.exit(1);
-        }
-
         String agenda = args[0];
 
         try {
             switch (TiposProcessoEnum.valueOf(args[1])) {
                 case EXTRACAO_BILHETES:
-                    ExtracaoBilhetes.realizaProcessamento(agenda);
+                    ExtracaoBilhetes.realizaProcessamento(agenda, args);
                     break;
                 case BAIXA_ARQUIVOS:
-                    BaixaArquivos.realizaProcessamento(agenda);
+                    BaixaArquivos.realizaProcessamento(agenda, args);
                     break;
                 case SOLICITA_REEMBOLSO:
-                    SolicitaReembolso.realizaProcessamento(agenda);
+                    SolicitaReembolso.realizaProcessamento(agenda, args);
                     break;
             }
         } catch (IllegalArgumentException e) {

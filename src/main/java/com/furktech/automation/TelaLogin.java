@@ -17,6 +17,9 @@ public class TelaLogin {
         public static void realizaLogin(WebDriver driver, WebDriverWait wait, User user) {
 
                 driver.get("https://portal.iata.org/s/login/?language=pt_BR");
+
+                logger.info("Entrou na tela do portal COM SUCESSO!.");
+
                 driver.manage().window().maximize();
 
                 // Busca os elementos atráves do x-path respeitando o wait.

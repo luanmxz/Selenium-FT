@@ -27,11 +27,11 @@ public class ExtracaoBilhetes {
     private static final Logger logger = LoggerFactory.getLogger(ExtracaoBilhetes.class);
     static final Dotenv dotenv = Dotenv.load();
 
-    public static void realizaProcessamento(String agenda) throws IOException, InterruptedException {
+    public static void realizaProcessamento(String agenda, String[] args) throws IOException, InterruptedException {
 
         logger.info("Iniciando processo de extração de bilhetes para a AGENDA {}", agenda);
 
-        WebDriver webdriver = WebDriverConfig.startaDriver();
+        WebDriver webdriver = WebDriverConfig.startaDriver(args);
         WebDriverWait wait = WebDriverConfig.configuraWait(webdriver,
                 Duration.ofSeconds(Long.parseLong(dotenv.get("DEFAULT_WAIT_TIMEOUT"))),
                 Duration.ofMillis(Long.parseLong(dotenv.get("DEFAULT_WAIT_POLLING"))));

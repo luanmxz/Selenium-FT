@@ -7,7 +7,7 @@ public class BaixaArquivos {
 
     private static final Logger logger = LoggerFactory.getLogger(BaixaArquivos.class);
 
-    public static void realizaProcessamento(String agenda) {
+    public static void realizaProcessamento(String agenda, String[] args) {
 
         logger.info("Iniciando processo de baixa de arquvios para a AGENDA {}", agenda);
     }

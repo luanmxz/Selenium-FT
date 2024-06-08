@@ -7,7 +7,7 @@ public class SolicitaReembolso {
 
     private static final Logger logger = LoggerFactory.getLogger(SolicitaReembolso.class);
 
-    public static void realizaProcessamento(String agenda) {
+    public static void realizaProcessamento(String agenda, String[] args) {
 
         logger.info("Iniciando processo de pedido de reembolso para a AGENDA {}", agenda);
     }
