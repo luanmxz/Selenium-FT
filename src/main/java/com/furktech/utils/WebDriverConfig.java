@@ -18,42 +18,47 @@ public class WebDriverConfig {
     static final Dotenv dotenv = Dotenv.load();
 
     public static WebDriver startaDriver(String[] args) {
-
         try {
-            if (args.length > 3) {
-                logger.info("Recebendo PATH do webdriver como argumento!. PATH Recebido: {}",
-                        args[3]);
-                System.setProperty("webdriver.gecko.driver", args[3]);
-            } else {
-                logger.info("Buscando PATH default do geckodriver. PATH {}",
-                        dotenv.get("PATH_GECKODRIVER"));
-                System.setProperty("webdriver.gecko.driver", dotenv.get("PATH_GECKODRIVER"));
-            }
-
-            if (args[2].equals("TRUE") || Boolean.parseBoolean(args[2])) {
-                logger.info("Executando FIREFOX no modo HEADLESS.");
-
-                FirefoxOptions options = new FirefoxOptions();
-                options.addArguments("-headless");
-                options.setLogLevel(FirefoxDriverLogLevel.TRACE);
-
-                WebDriver webdriverHeadless = new FirefoxDriver(options);
-                return webdriverHeadless;
-            }
-
-            WebDriver webdriver = new FirefoxDriver();
-
-            if (webdriver != null)
-                logger.info("Criou o webdriver com sucesso!");
-
-            return webdriver;
+            configuraPathGeckoDriver(args);
+            return instanciaWebDriver(args[2]);
         } catch (Exception e) {
             logger.error("Message error -> {}", e.getMessage());
         }
 
         logger.error("Erro: Não foi possível instancia o webdriver!");
         return null;
+    }
 
+    private static void configuraPathGeckoDriver(String[] args) {
+        String geckoDriverPath;
+        if (args.length > 3) {
+            logger.info("Recebendo PATH do webdriver como argumento!. PATH Recebido: {}", args[3]);
+            geckoDriverPath = args[3];
+        } else {
+            geckoDriverPath = dotenv.get("PATH_GECKODRIVER", "/snap/bin/geckodriver");
+            logger.info("Buscando PATH default do geckodriver. PATH {}", geckoDriverPath);
+        }
+        System.setProperty("webdriver.gecko.driver", geckoDriverPath);
+    }
+
+    private static WebDriver instanciaWebDriver(String modoHeadless) {
+        if (Boolean.parseBoolean(modoHeadless) || "TRUE".equalsIgnoreCase(modoHeadless)) {
+            logger.info("Executando FIREFOX no modo HEADLESS.");
+
+            FirefoxOptions options = new FirefoxOptions();
+            options.addArguments("-headless");
+            options.setLogLevel(FirefoxDriverLogLevel.TRACE);
+
+            WebDriver webdriverHeadless = new FirefoxDriver(options);
+            logger.info("Webdriver headless criado com sucesso!");
+            return webdriverHeadless;
+        } else {
+            WebDriver webdriver = new FirefoxDriver();
+            if (webdriver != null) {
+                logger.info("Criou o webdriver com sucesso!");
+            }
+            return webdriver;
+        }
     }
 
     /*
