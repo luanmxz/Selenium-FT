@@ -34,16 +34,16 @@ public class SeleniumUtils {
         String data = Utils.getDataAtualString();
         String dataTruncate = Utils.getDataAtualTruncateString();
 
-        String dirLogErro = Utils.createDirectoryIfNotExists(pathToSaveLogError + "\\" + dataTruncate)
+        String dirLogErro = Utils.createDirectoryIfNotExists(pathToSaveLogError + "/" + dataTruncate)
                 .toString();
 
-        String pathScreenshot = dirLogErro + "\\" + data + "_"
+        String pathScreenshot = dirLogErro + "/" + data + "_"
                 + "Error-Screenshot.png";
 
         FileHandler.copy(screenshot,
                 Utils.createFile(pathScreenshot));
 
-        File errorLogFile = Utils.createFile(dirLogErro + "\\" + data + "-Error_log.txt");
+        File errorLogFile = Utils.createFile(dirLogErro + "/" + data + "-Error_log.txt");
         FileWriter writer = new FileWriter(errorLogFile);
 
         try {

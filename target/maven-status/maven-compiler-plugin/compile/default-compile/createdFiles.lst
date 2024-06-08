@@ -4,12 +4,15 @@ com\furktech\Main.class
 com\Authenticator$MigrationPayload$OtpParameters.class
 com\Authenticator$MigrationPayload$OtpType$1.class
 com\furktech\Main$1.class
-com\furktech\utils\DecodeTOTP.class
 com\Authenticator$MigrationPayloadOrBuilder.class
 com\Authenticator.class
+com\furktech\utils\Utils.class
+com\furktech\utils\ErrorHandler$WebDriverAction.class
 com\furktech\automation\TelaLogin.class
 com\Authenticator$MigrationPayload$Builder.class
 com\Authenticator$MigrationPayload$DigitCount.class
+com\furktech\config\WebDriverConfig.class
+com\furktech\utils\SeleniumUtils.class
 com\furktech\automation\TelaBspLink.class
 com\furktech\model\SolicitacoesPorUnidadeOperacional.class
 com\furktech\automation\TelaBspPortal.class
@@ -22,8 +25,9 @@ com\Authenticator$MigrationPayload$Algorithm$1.class
 com\furktech\model\User.class
 com\furktech\automation\TelaAutenticacao2FA.class
 com\furktech\http\Requisicoes.class
-com\furktech\utils\WebDriverConfig.class
 com\furktech\processos\ExtracaoBilhetes.class
+com\furktech\utils\ErrorHandler.class
+com\furktech\config\AutenticatorConfig.class
 com\furktech\utils\TiposProcessoEnum.class
 com\furktech\model\Solicitacao.class
 com\Authenticator$MigrationPayload$OtpType.class

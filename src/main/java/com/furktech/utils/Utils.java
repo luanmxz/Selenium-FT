@@ -25,10 +25,10 @@ public class Utils {
     public static String getRootDirectory() {
         String os = getRunningOS();
         if (os.contains("win")) {
-            return System.getenv("SystemDrive") + "\\";
+            return System.getenv("SystemDrive") + "/";
         } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
             // Retorna o diretório raiz no caso de Unix/Linux
-            return "/";
+            return "";
         } else {
             // Retorno padrão para outros sistemas operacionais *Não implementado*
             return "";
