@@ -17,7 +17,7 @@
             "mainClass": "com.furktech.Main",
             "projectName": "selenium",
             "args": [
-                "2276376", "EXTRACAO_BILHETES"
+                "2276376", "EXTRACAO_BILHETES", "TRUE", "C:\\RPA\\webdriver\\geckodriver-v0.34.0-win64\\geckodriver.exe"
             ]
         }
     ]

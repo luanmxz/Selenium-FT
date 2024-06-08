@@ -16,7 +16,15 @@ import com.furktech.model.User;
 
 public class RequisicoesUtils {
 
-    public static User retornaUser(HttpResponse<String> dadosProcessamento)
+    /**
+     * Extrai e retorna o usuário e senha da resposta da requisição.
+     * 
+     * @param dadosProcessamento
+     * @return User
+     * @throws JsonMappingException
+     * @throws JsonProcessingException
+     */
+    public static User getUserFromHttpResponse(HttpResponse<String> dadosProcessamento)
             throws JsonMappingException, JsonProcessingException {
 
         String dadosBody = dadosProcessamento.body();
@@ -29,7 +37,17 @@ public class RequisicoesUtils {
         return user;
     }
 
-    public static List<SolicitacoesPorUnidadeOperacional> retornaSolicitacoes(HttpResponse<String> dadosProcessamento)
+    /**
+     * Extrai e retorna as solicitações da resposta da requisição, agrupadas por
+     * Unidade Operacional (IATA).
+     * 
+     * @param dadosProcessamento
+     * @return List<SolicitacoesPorUnidadeOperacional>
+     * @throws JsonMappingException
+     * @throws JsonProcessingException
+     */
+    public static List<SolicitacoesPorUnidadeOperacional> getSolicitacoesPorIATAFromHttpResponse(
+            HttpResponse<String> dadosProcessamento)
             throws JsonMappingException, JsonProcessingException {
 
         String dadosBody = dadosProcessamento.body();

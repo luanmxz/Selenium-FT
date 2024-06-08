@@ -29,7 +29,7 @@ public class TelaIATAS {
 
                 // Recupera as solicitações separadas por unidade operacional
                 List<SolicitacoesPorUnidadeOperacional> solicitacoesPorUnidadeOperacional = RequisicoesUtils
-                                .retornaSolicitacoes(dadosProcessamento);
+                                .getSolicitacoesPorIATAFromHttpResponse(dadosProcessamento);
 
                 for (SolicitacoesPorUnidadeOperacional solicitacoes : solicitacoesPorUnidadeOperacional) {
                         webdriver.navigate().to("https://portal.iata.org/idp/login?app=0spw0000000blJn");

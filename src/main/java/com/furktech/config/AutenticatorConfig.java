@@ -1,4 +1,4 @@
-package com.furktech.utils;
+package com.furktech.config;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.binary.Base32;
 import org.slf4j.Logger;
@@ -17,11 +18,20 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 
-public class DecodeTOTP {
+public class AutenticatorConfig {
 
-    static final Logger logger = LoggerFactory.getLogger(DecodeTOTP.class);
+    static final Logger logger = LoggerFactory.getLogger(AutenticatorConfig.class);
 
-    // Decodifica o QR CODE URL e retorna a secret key
+    /**
+     * Decodifica um TOTP (Time-Based One-Time Password) de uma URL de migração do
+     * Google. Caso gere um código com a quantidade de digitos incorretos, aguarda
+     * 30 segundos antes da nova tentativa.
+     *
+     * @param googleMigrationUrl a URL de migração do Google Authenticator contendo
+     *                           o TOTP (OPAuth Migration)
+     * @return o código TOTP decodificado
+     * @throws UnsupportedEncodingException se ocorrer um erro ao decodificar a URL
+     */
     public static String decodeTOTP(String googleMigrationUrl) throws UnsupportedEncodingException {
         String migrationUrl = googleMigrationUrl;
         List<Entry<String, String>> parsedUrl = parseUrl(migrationUrl);
@@ -36,6 +46,14 @@ public class DecodeTOTP {
             while (TOTPCode.length() != 6) {
                 logger.info("TOTPCode gerado inválido {}, gerando novo código.", TOTPCode);
 
+                // Espera 30 segundos antes de tentar gerar um novo código
+                try {
+                    TimeUnit.SECONDS.sleep(30);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    logger.error("Erro ao esperar antes de gerar novo código TOTP", e);
+                }
+
                 TOTPCode = getTOTPCode(secretKey);
 
                 logger.info("Novo TOTPCode Gerado", TOTPCode);
@@ -48,7 +66,13 @@ public class DecodeTOTP {
         }
     }
 
-    // Realiza o parse da URL e retorna uma lista de key-value pairs
+    /**
+     * Realiza o parse da URL e retorna uma lista de key-value pairs.
+     * 
+     * @param url A URL a ser analisada.
+     * @return Uma lista de key-value pairs representando os parâmetros da URL.
+     * @throws UnsupportedEncodingException Se ocorrer um erro ao decodificar a URL.
+     */
     public static List<Entry<String, String>> parseUrl(String url) throws UnsupportedEncodingException {
         List<Entry<String, String>> urlPairs = new ArrayList<>();
         String[] pairs = url.split("&");
@@ -61,7 +85,13 @@ public class DecodeTOTP {
         return urlPairs;
     }
 
-    // Extrai a secret key do TOTP payload
+    /**
+     * Extrai a secret key do payload do Google Authenticator Migration URL (opauth
+     * migration)
+     *
+     * @param payload o payload do opauth migration
+     * @return a secret key extraída
+     */
     private static String extractSecretKey(Authenticator.MigrationPayload payload) {
 
         for (Authenticator.MigrationPayload.OtpParameters otpParameters : payload.getOtpParametersList()) {
@@ -81,7 +111,12 @@ public class DecodeTOTP {
         throw new RuntimeException("Nenhuma secret key encontrada no TOTP payload");
     }
 
-    // Gera um código TOTP a partir da secret key
+    /**
+     * Gera um código TOTP (Time-Based One-Time Password) usando a secret key.
+     *
+     * @param secretKey
+     * @return o código TOTP gerado
+     */
     public static String getTOTPCode(String secretKey) {
 
         GoogleAuthenticator gAuth = new GoogleAuthenticator();
