@@ -12,7 +12,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class ErrorHandler {
 
-    private static final String DEFAULT_SCREENSHOT_DIR = Utils.getRootDirectory() + "/RPA/Logs/Screenshots/";
+    private static final String DEFAULT_LOG_ERROR_DIR = Utils.getRootDirectory() + "RPA/Logs/Error/";
 
     static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
     static final Dotenv dotenv = Dotenv.load();
@@ -28,14 +28,10 @@ public class ErrorHandler {
     public static void webDriverErrorHandler(WebDriver webdriver, WebDriverException webDriverException)
             throws IOException {
 
-        logger.info("Tirando screenshot da tela no momento do erro");
+        String pathToSaveLogError = dotenv.get("PATH_SCREENSHOTS",
+                Utils.createDirectoryIfNotExists(DEFAULT_LOG_ERROR_DIR).toString());
 
-        String pathScreenshots = dotenv.get("PATH_SCREENSHOTS",
-                Utils.createDirectoryIfNotExists(DEFAULT_SCREENSHOT_DIR).toString());
-
-        SeleniumUtils.takeScreenshot(webdriver, pathScreenshots);
-
-        logger.info("Screenshot salva em {}", DEFAULT_SCREENSHOT_DIR);
+        SeleniumUtils.saveLogError(webdriver, webDriverException, pathToSaveLogError);
     }
 
     /**

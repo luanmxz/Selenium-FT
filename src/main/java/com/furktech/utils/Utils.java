@@ -25,7 +25,7 @@ public class Utils {
     public static String getRootDirectory() {
         String os = getRunningOS();
         if (os.contains("win")) {
-            return System.getenv("SystemDrive");
+            return System.getenv("SystemDrive") + "\\";
         } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
             // Retorna o diretório raiz no caso de Unix/Linux
             return "/";
@@ -61,7 +61,14 @@ public class Utils {
     }
 
     public static String getDataAtualString() {
-        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+        String data = dataFormatada.format(LocalDateTime.now());
+
+        return data;
+    }
+
+    public static String getDataAtualTruncateString() {
+        DateTimeFormatter dataFormatada = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String data = dataFormatada.format(LocalDateTime.now());
 
         return data;

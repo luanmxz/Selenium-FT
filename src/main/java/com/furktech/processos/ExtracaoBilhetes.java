@@ -47,10 +47,9 @@ public class ExtracaoBilhetes {
 
         logger.info("Iniciando processo de extração de bilhetes para a AGENDA {}", agenda);
 
-        WebDriver webdriver = null;
+        WebDriver webdriver = WebDriverConfig.startaDriver(args);
 
         ErrorHandler.executeWithHandling(webdriver, (WebDriver d) -> {
-            d = WebDriverConfig.startaDriver(args);
 
             WebDriverWait wait = WebDriverConfig.configuraWait(d,
                     Duration.ofSeconds(Long.parseLong(dotenv.get("DEFAULT_WAIT_TIMEOUT", "60"))),
