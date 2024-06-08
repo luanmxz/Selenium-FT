@@ -1,15 +1,11 @@
 package com.furktech.processos;
 
 import java.io.IOException;
-import java.io.File;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.io.FileHandler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
