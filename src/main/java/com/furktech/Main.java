@@ -10,8 +10,6 @@ import com.furktech.processos.ExtracaoBilhetes;
 import com.furktech.processos.SolicitaReembolso;
 import com.furktech.utils.TiposProcessoEnum;
 
-import io.github.cdimascio.dotenv.Dotenv;
-
 /**
  * @author luan.costa@wises.com.br
  * @version 1.0
@@ -20,7 +18,6 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class Main {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
-    static final Dotenv dotenv = Dotenv.load();
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
@@ -30,15 +27,9 @@ public class Main {
 
         try {
             switch (TiposProcessoEnum.valueOf(args[1])) {
-                case EXTRACAO_BILHETES:
-                    ExtracaoBilhetes.realizaProcessamento(agenda, args);
-                    break;
-                case BAIXA_ARQUIVOS:
-                    BaixaArquivos.realizaProcessamento(agenda, args);
-                    break;
-                case SOLICITA_REEMBOLSO:
-                    SolicitaReembolso.realizaProcessamento(agenda, args);
-                    break;
+                case EXTRACAO_BILHETES -> ExtracaoBilhetes.realizaProcessamento(agenda, args);
+                case BAIXA_ARQUIVOS -> BaixaArquivos.realizaProcessamento(agenda, args);
+                case SOLICITA_REEMBOLSO -> SolicitaReembolso.realizaProcessamento(agenda, args);
             }
         } catch (IllegalArgumentException e) {
             logger.error(e.getMessage());
