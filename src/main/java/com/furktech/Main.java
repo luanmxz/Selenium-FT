@@ -21,8 +21,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        logger.info("Testing remote repository");
-
         String agenda = args[0];
 
         try {
