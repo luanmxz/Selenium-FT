@@ -31,4 +31,4 @@ jobs:
       run: mvn clean package -DskipTests
 
     - name: Generate deployment package
-      run: cd target && zip -r deploy.zip Procfile furk-robot-1.0-SNAPSHOT.jar
+      run: cd target && zip -r deploy.zip furk-robot-1.0-SNAPSHOT.jar
