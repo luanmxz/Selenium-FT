@@ -22,7 +22,7 @@ public class TelaBspLink {
 
                 wait.until(ExpectedConditions
                                 .elementToBeClickable(
-                                                By.xpath("/html/body/bspl-root/bspl-core/div/bspl-menu/snav/ul/li[3]")));
+                                                By.xpath("/html/body/bspl-root/bspl-core/div/bspl-menu/nav/ul/li[3]")));
 
                 // ITERAR AS SOLICITACOES PRESENTES NO ENTRY PASSANDO O NUM BILHETE DE CADA UMA
                 // AO SCRIPT DO CLÓVIS
